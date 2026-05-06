@@ -1,0 +1,48 @@
+name: Docs and probes
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate docs manifests and dry-run probes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Validate JSON manifest syntax
+        run: python3 -m json.tool mobile-stack.json >/dev/null
+
+      - name: Validate mobile stack manifest
+        run: python3 scripts/validate-mobile-stack.py --config mobile-stack.json
+
+      - name: Run dry-run structured probe
+        run: python3 scripts/probe-hestia-mobile-json.py --config mobile-stack.json --dry-run --pretty
+
+      - name: Compile Python scripts
+        run: python3 -m py_compile scripts/*.py
+
+      - name: Check shell script syntax
+        shell: bash
+        run: |
+          shopt -s nullglob
+          scripts=(scripts/*.sh)
+          if (( ${#scripts[@]} == 0 )); then
+            echo "No shell scripts to check"
+            exit 0
+          fi
+          bash -n "${scripts[@]}"
+
+      - name: Run local component drift check in dry mode
+        shell: bash
+        run: scripts/check-component-drift.sh --manifest-only

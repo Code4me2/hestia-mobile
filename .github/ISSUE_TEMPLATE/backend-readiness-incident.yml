@@ -1,0 +1,74 @@
+name: Backend readiness incident
+description: Report tiny-emerson, Unmute, or orchestrator readiness failures
+title: "backend: "
+labels:
+  - backend
+  - readiness
+  - incident
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when Gate C backend readiness fails. Do not include secrets, service credentials, Tailnet auth keys, private keys, or full environment dumps.
+  - type: dropdown
+    id: service
+    attributes:
+      label: Affected service
+      options:
+        - unmute health
+        - unmute realtime websocket
+        - orchestrator health
+        - orchestrator models
+        - tiny-emerson connectivity
+        - unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Blocking end-to-end mobile tests
+        - Blocking backend-only tests
+        - Degraded but non-blocking
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: health-output
+    attributes:
+      label: Health command output
+      render: text
+      placeholder: |
+        curl -fsS http://tiny-emerson:8000/health
+        curl -fsS http://tiny-emerson/v1/health
+        python3 scripts/probe-hestia-mobile-json.py --config mobile-stack.json --pretty
+    validations:
+      required: true
+  - type: textarea
+    id: classification
+    attributes:
+      label: Classification
+      description: Which health policy field or endpoint failed?
+      placeholder: "llm_up=false and ok=false; voice_cloning_up=false is non-blocking"
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Mobile impact
+      description: Which phone/shell/voice flows are blocked?
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Recovery attempted
+      description: Link the runbook and list steps already completed.
+      placeholder: docs/runbooks/recover-unmute-llm-down.md
+  - type: input
+    id: first-seen
+    attributes:
+      label: First seen
+      description: UTC timestamp or approximate time.
+      placeholder: "2026-05-06T15:00:00Z"

@@ -1,0 +1,80 @@
+name: Mobile bring-up task
+description: Track a concrete integration task for the Hestia Mobile bring-up
+title: "bringup: "
+labels:
+  - mobile
+  - bringup
+  - task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for planned bring-up work that crosses docs, probes, phone services, or component repos. Do not include secrets.
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: One-sentence outcome.
+    validations:
+      required: true
+  - type: checkboxes
+    id: repos
+    attributes:
+      label: Repos involved
+      options:
+        - label: hestia-mobile
+        - label: hestia-shell
+        - label: hestia-ai-bridge
+        - label: unmute-streaming-client
+        - label: unmute
+        - label: agentic_flow
+  - type: dropdown
+    id: primary-gate
+    attributes:
+      label: Primary acceptance gate
+      options:
+        - Gate A - Manifest validity
+        - Gate B - Local repo alignment
+        - Gate C - Backend readiness
+        - Gate D - Phone bridge readiness
+        - Gate E - Shell socket readiness
+        - Gate F - Voice service readiness
+        - Documentation only
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Task checklist
+      value: |
+        - [ ] Update implementation or docs
+        - [ ] Update probe/manifest if contract changed
+        - [ ] Run local validation commands
+        - [ ] Record evidence in PR or compatibility matrix
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and blockers
+      description: List backend availability, hardware, branches, or upstream PRs.
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation commands
+      render: shell
+      value: |
+        python3 -m json.tool mobile-stack.json
+        python3 scripts/validate-mobile-stack.py --config mobile-stack.json
+        python3 scripts/probe-hestia-mobile-json.py --config mobile-stack.json --dry-run --pretty
+        python3 -m py_compile scripts/*.py
+        bash -n scripts/*.sh
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of done
+      description: What evidence closes this task?
+    validations:
+      required: true

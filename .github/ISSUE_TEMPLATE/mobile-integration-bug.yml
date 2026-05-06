@@ -1,0 +1,78 @@
+name: Mobile integration bug
+description: Report a phone-side Hestia Mobile integration failure
+title: "mobile: "
+labels:
+  - mobile
+  - integration
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for phone-local shell, bridge, voice-client, socket, or service regressions. Do not include secrets, private keys, auth tokens, or full environment dumps.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - hestia-shell
+        - hestia-ai-bridge
+        - unmute-streaming-client
+        - hestia-mobile integration
+        - unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: gate
+    attributes:
+      label: Failing gate
+      options:
+        - Gate A - Manifest validity
+        - Gate B - Local repo alignment
+        - Gate D - Phone bridge readiness
+        - Gate E - Shell socket readiness
+        - Gate F - Voice service readiness
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What failed and what behavior did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands run
+      description: Paste exact read-only commands used to diagnose.
+      render: shell
+      placeholder: |
+        python3 scripts/probe-hestia-mobile-json.py --config mobile-stack.json --pretty
+        systemctl --user status hestia-unmute-voice.service --no-pager
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Redact secrets and unrelated personal data.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Phone OS/build, branch names, and local repo status if known.
+      placeholder: |
+        hestia-mobile branch: main
+        component branch: feat/hestia-voice-gateway
+        backend node: tiny-emerson
+  - type: textarea
+    id: attempted-recovery
+    attributes:
+      label: Attempted recovery
+      description: Link the runbook used and list completed steps.
+      placeholder: docs/runbooks/recover-phone-voice-service.md

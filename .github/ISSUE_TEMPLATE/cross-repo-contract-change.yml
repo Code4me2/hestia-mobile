@@ -1,0 +1,77 @@
+name: Cross-repo contract change
+description: Coordinate API, socket, service, endpoint, or manifest changes across component repos
+title: "contract: "
+labels:
+  - contract
+  - cross-repo
+  - integration
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this before changing contracts consumed by another Hestia Mobile component. Do not include secrets.
+  - type: dropdown
+    id: contract-type
+    attributes:
+      label: Contract type
+      options:
+        - HTTP endpoint
+        - WebSocket protocol
+        - Unix socket path or payload
+        - systemd user service
+        - mobile-stack manifest
+        - health response schema
+        - branch or release coordination
+        - other
+    validations:
+      required: true
+  - type: checkboxes
+    id: affected-repos
+    attributes:
+      label: Affected repos
+      options:
+        - label: hestia-mobile
+        - label: hestia-shell
+        - label: hestia-ai-bridge
+        - label: unmute-streaming-client
+        - label: unmute
+        - label: agentic_flow
+  - type: textarea
+    id: current-contract
+    attributes:
+      label: Current contract
+      description: Include paths, URLs, fields, service names, or payload examples.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-contract
+    attributes:
+      label: Proposed contract
+      description: Include compatibility notes and transition period.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: rollout
+    attributes:
+      label: Rollout plan
+      description: Repo order, branches, tests, and fallback.
+      placeholder: |
+        1. Update producer behind backward-compatible field.
+        2. Update consumers.
+        3. Update mobile-stack.json and docs.
+        4. Remove legacy path after acceptance gates pass.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation commands
+      render: shell
+      placeholder: |
+        python3 -m json.tool mobile-stack.json
+        python3 scripts/validate-mobile-stack.py --config mobile-stack.json
+        python3 scripts/probe-hestia-mobile-json.py --config mobile-stack.json --dry-run --pretty
+    validations:
+      required: true

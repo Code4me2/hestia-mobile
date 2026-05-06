@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -u
 
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PROBE="$ROOT/scripts/probe-hestia-mobile-json.py"
+CONFIG="$ROOT/mobile-stack.json"
+
+if command -v python3 >/dev/null 2>&1 && [ -x "$PROBE" ]; then
+  python3 "$PROBE" --config "$CONFIG" --pretty || true
+  exit 0
+fi
+
 echo '## backend: orchestrator'
 curl -fsS http://tiny-emerson:8000/health && echo || echo 'orchestrator health failed'
 

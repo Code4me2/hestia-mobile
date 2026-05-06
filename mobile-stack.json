@@ -1,0 +1,64 @@
+{
+  "stack_name": "hestia-mobile",
+  "active_branch": "feat/hestia-voice-gateway",
+  "backend_node": "tiny-emerson",
+  "repos": {
+    "hestia-mobile": {
+      "path": "/home/purism/projects/ai-phone-review/hestia-mobile",
+      "remote": "git@github.com:Code4me2/hestia-mobile.git",
+      "branch": "main",
+      "owner": "integration"
+    },
+    "hestia-shell": {
+      "path": "/home/purism/projects/ai-phone-review/hestia-shell",
+      "remote": "git@github.com:Code4me2/hestia-shell.git",
+      "branch": "feat/hestia-voice-gateway",
+      "owner": "shell-ui"
+    },
+    "hestia-ai-bridge": {
+      "path": "/home/purism/projects/ai-phone-review/hestia-ai-bridge",
+      "remote": "git@github.com:Code4me2/hestia-ai-bridge.git",
+      "branch": "feat/hestia-voice-gateway",
+      "owner": "bridge"
+    },
+    "unmute-streaming-client": {
+      "path": "/home/purism/projects/ai-phone-review/unmute-streaming-client",
+      "remote": "git@github.com:Code4me2/unmute-streaming-client.git",
+      "branch": "feat/hestia-voice-gateway",
+      "owner": "voice-client"
+    },
+    "unmute": {
+      "path": "/home/purism/projects/ai-phone-review/unmute",
+      "remote": "git@github.com:Code4me2/unmute.git",
+      "branch": "main",
+      "owner": "backend-voice"
+    },
+    "agentic_flow": {
+      "path": "/home/purism/projects/ai-phone-review/agentic_flow",
+      "remote": "git@github.com:Code4me2/agentic_flow.git",
+      "branch": "main",
+      "owner": "orchestrator"
+    }
+  },
+  "endpoints": {
+    "orchestrator_health": "http://tiny-emerson:8000/health",
+    "orchestrator_models": "http://tiny-emerson:8000/v1/models",
+    "unmute_health": "http://tiny-emerson/v1/health",
+    "unmute_realtime": "ws://tiny-emerson:80/v1/realtime",
+    "bridge_health": "http://127.0.0.1:8765/health"
+  },
+  "phone": {
+    "ai_socket": "$XDG_RUNTIME_DIR/hestia-shell/ai.sock",
+    "assistant_socket": "$XDG_RUNTIME_DIR/hestia-shell/assistant.sock",
+    "voice_service": "hestia-unmute-voice.service",
+    "bridge_service": "hestia-ai-bridge.service",
+    "voice_input_device": 11,
+    "voice_output_device": 11
+  },
+  "health_policy": {
+    "unmute_required_true": ["stt_up", "tts_up", "llm_up", "ok"],
+    "unmute_non_blocking_false": ["voice_cloning_up"],
+    "bridge_required_true": ["orchestrator_online"],
+    "orchestrator_required_status": "healthy"
+  }
+}

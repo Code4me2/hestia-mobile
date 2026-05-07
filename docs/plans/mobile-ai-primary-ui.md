@@ -125,22 +125,16 @@ When the user explicitly wants normal apps:
 
 ## Recommended repo decision
 
-Create a separate repo when implementation starts:
+Implementation has started in a separate repo:
 
 ```text
 Code4me2/hestia-mobile-shell
+https://github.com/Code4me2/hestia-mobile-shell
 ```
 
-Alternative names:
+`hestia-mobile-shell` is the mobile-native AI-primary visual layer for PureOS/Phosh. The scope is broader than a single app, but it remains clearly separate from desktop `hestia-shell`.
 
-```text
-Code4me2/hestia-mobile-ui
-Code4me2/hestia-phosh-shell
-```
-
-Recommendation: use `hestia-mobile-shell` because the scope is broader than a single app, but still clearly separate from desktop `hestia-shell`.
-
-`hestia-mobile` remains the integration/meta repo and should reference this future repo in `mobile-stack.json` once created.
+`hestia-mobile` remains the integration/meta repo and now references this experimental repo in `mobile-stack.json`.
 
 ## What to keep from current work
 

@@ -9,6 +9,13 @@
       "branch": "main",
       "owner": "integration"
     },
+    "hestia-mobile-shell": {
+      "path": "/home/purism/projects/ai-phone-review/hestia-mobile-shell",
+      "remote": "git@github.com:Code4me2/hestia-mobile-shell.git",
+      "branch": "main",
+      "owner": "mobile-shell-ui",
+      "status": "experimental"
+    },
     "hestia-shell": {
       "path": "/home/purism/projects/ai-phone-review/hestia-shell",
       "remote": "git@github.com:Code4me2/hestia-shell.git",
@@ -56,9 +63,18 @@
     "voice_output_device": 11
   },
   "health_policy": {
-    "unmute_required_true": ["stt_up", "tts_up", "llm_up", "ok"],
-    "unmute_non_blocking_false": ["voice_cloning_up"],
-    "bridge_required_true": ["orchestrator_online"],
+    "unmute_required_true": [
+      "stt_up",
+      "tts_up",
+      "llm_up",
+      "ok"
+    ],
+    "unmute_non_blocking_false": [
+      "voice_cloning_up"
+    ],
+    "bridge_required_true": [
+      "orchestrator_online"
+    ],
     "orchestrator_required_status": "healthy"
   }
 }

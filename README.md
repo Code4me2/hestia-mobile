@@ -9,7 +9,8 @@ architecture, deployment, and verification flow.
 
 ## Component repos
 
-- `hestia-shell` — QML shell surface, orb, drawers, assistant UI state.
+- `hestia-mobile-shell` — experimental PureOS/Phosh AI-primary mobile visual layer.
+- `hestia-shell` — desktop/laptop QML shell surface and reference assistant UI model.
 - `hestia-ai-bridge` — phone-local AI socket and assistant event bus.
 - `unmute-streaming-client` — phone microphone/speaker realtime voice client.
 - `unmute` — backend realtime voice/STT/TTS service on inference hardware.

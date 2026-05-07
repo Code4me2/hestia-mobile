@@ -17,6 +17,7 @@ REQUIRED_ENDPOINTS = [
     "unmute_health",
     "unmute_realtime",
     "bridge_health",
+    "bridge_mobile_capabilities",
 ]
 REQUIRED_PHONE = ["ai_socket", "assistant_socket", "voice_service", "bridge_service"]
 

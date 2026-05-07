@@ -31,6 +31,7 @@ Backend endpoints currently verified:
 Unmute health:        http://tiny-emerson/v1/health
 Unmute realtime:      ws://tiny-emerson:80/v1/realtime
 Orchestrator health:  http://tiny-emerson:8000/health
+Bridge capabilities:  http://127.0.0.1:8765/mobile_capabilities
 ```
 
 ## Development branches
@@ -49,6 +50,7 @@ feat/hestia-voice-gateway
 - `docs/tiny-emerson-backend.md` — backend service checks.
 - `docs/acceptance-gates.md` — integration readiness gates and failure classification.
 - `docs/integration-manifest.md` — `mobile-stack.json` manifest contract.
+- `docs/contracts/agent-phone-interface.md` — local-only agent-facing phone interface contract.
 - `docs/runbooks/recover-unmute-llm-down.md` — backend LLM dependency recovery.
 - `docs/runbooks/recover-bridge-orchestrator-offline.md` — bridge/orchestrator recovery.
 - `docs/runbooks/recover-phone-voice-service.md` — phone voice service recovery.

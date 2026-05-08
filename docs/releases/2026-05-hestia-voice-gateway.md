@@ -196,6 +196,38 @@ curl -fsS http://127.0.0.1:8000/health
 curl -fsS http://127.0.0.1/v1/health
 ```
 
+## Offline agent-surface expansion — 2026-05-07
+
+This follow-up snapshot covers the no-phone agent-facing surface area added after the initial voice gateway snapshot.
+
+| Component | Branch | SHA | Status |
+| --- | --- | --- | --- |
+| `hestia-ai-bridge` | `feat/hestia-voice-gateway` | `50d883f` | Pushed; PR #1 updated |
+| `hestia-mobile-shell` | `main` | `cafad63` | Pushed |
+| `hestia-mobile` | `main` | `a22dc09` | Pushed |
+
+Validated offline:
+
+```text
+hestia-ai-bridge:    22 passed
+hestia-mobile-shell: 106 passed
+hestia-mobile:       5 passed; ok: mobile-stack.json
+```
+
+Added surface area:
+
+- `GET /mobile_state` for runtime protected-mode state and `safe_actions`.
+- `GET /mobile_capabilities` now advertises loopback `mobile_state`.
+- `hestia-mobile-agent` now requires/fetches state, fails closed, gates protected-mode-unsafe visual verbs, and supports bearer tokens through `--bridge-token` / `HESTIA_BRIDGE_TOKEN`.
+- `hestia-mobile-fake-phone` provides offline capabilities/state/socket simulation while the phone is unavailable.
+- `mobile-stack.json` and validator now require `bridge_mobile_state` and reject non-loopback bridge endpoints.
+
+Runtime validation still pending:
+
+- Start/restart the local bridge on the phone and verify authenticated `curl` checks against `/mobile_capabilities` and `/mobile_state`.
+- Run `hestia-mobile-agent` against the live `assistant.sock` during idle, call-active, offline, and error states.
+- Confirm Phosh/mobile-shell visual behavior matches `safe_actions` decisions.
+
 ## Manual validation still recommended before user-facing release
 
 The P0 probe and protocol path are passing. Before a user-facing release, run a visual phone validation pass and record notes/screenshots if possible:

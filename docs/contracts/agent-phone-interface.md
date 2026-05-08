@@ -5,6 +5,7 @@ The current Hestia Mobile agent-facing phone interface is a local-only contract 
 - `hestia-mobile-shell/docs/contracts/agent-phone-interface.md` — canonical visual/event contract.
 - `hestia-ai-bridge` `GET /mobile_capabilities` — runtime discovery of supported states, visual verbs, protected modes, and socket paths.
 - `mobile-stack.json` — integration manifest entry for the capabilities endpoint and local sockets.
+- `hestia-mobile-agent` — validated shell-side adapter CLI that fetches capabilities before sending allowed visual verbs.
 
 ## Local surfaces
 
@@ -30,6 +31,16 @@ close_chat
 open_app_interface
 close_app_interface
 ```
+
+## Agent adapter
+
+The shell-side adapter is the preferred offline-testable send path for agents:
+
+```bash
+hestia-mobile-agent --capabilities-url http://127.0.0.1:8765/mobile_capabilities show-card --id agent-demo --title "Agent control works"
+```
+
+It validates the local-only capability document and refuses unadvertised verbs before writing to `assistant.sock`.
 
 ## Protected modes
 

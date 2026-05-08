@@ -53,7 +53,8 @@
     "unmute_health": "http://tiny-emerson/v1/health",
     "unmute_realtime": "ws://tiny-emerson:80/v1/realtime",
     "bridge_health": "http://127.0.0.1:8765/health",
-    "bridge_mobile_capabilities": "http://127.0.0.1:8765/mobile_capabilities"
+    "bridge_mobile_capabilities": "http://127.0.0.1:8765/mobile_capabilities",
+    "bridge_mobile_state": "http://127.0.0.1:8765/mobile_state"
   },
   "phone": {
     "ai_socket": "$XDG_RUNTIME_DIR/hestia-shell/ai.sock",

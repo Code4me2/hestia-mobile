@@ -32,6 +32,7 @@ Unmute health:        http://tiny-emerson/v1/health
 Unmute realtime:      ws://tiny-emerson:80/v1/realtime
 Orchestrator health:  http://tiny-emerson:8000/health
 Bridge capabilities:  http://127.0.0.1:8765/mobile_capabilities
+Bridge mobile state:  http://127.0.0.1:8765/mobile_state
 ```
 
 ## Development branches

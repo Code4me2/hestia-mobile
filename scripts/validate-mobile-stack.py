@@ -18,8 +18,10 @@ REQUIRED_ENDPOINTS = [
     "unmute_realtime",
     "bridge_health",
     "bridge_mobile_capabilities",
+    "bridge_mobile_state",
 ]
 REQUIRED_PHONE = ["ai_socket", "assistant_socket", "voice_service", "bridge_service"]
+LOOPBACK_ENDPOINTS = {"bridge_health", "bridge_mobile_capabilities", "bridge_mobile_state"}
 
 
 def load_config(path: Path) -> dict:
@@ -60,6 +62,8 @@ def validate(config: dict) -> list[str]:
             parsed = urlparse(value)
             allowed = {"http", "https", "ws", "wss"}
             require(parsed.scheme in allowed and bool(parsed.netloc), f"invalid endpoint URL for {key}: {value}", errors)
+            if key in LOOPBACK_ENDPOINTS and parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
+                errors.append(f"{key} must use loopback host")
 
     phone = config.get("phone", {})
     require(isinstance(phone, dict), "phone must be an object", errors)
